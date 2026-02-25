@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Broken Contact Form</title>
+</head>
+<body>
+
+<!-- ❌ BROKEN FORM — Multiple Issues -->
+<form action="" method="">
+
+  <!-- Bug 1: No name attribute, data won't submit -->
+  <input type="text" placeholder="Your Name">
+
+  <!-- Bug 2: Wrong input type for email -->
+  <input type="text" placeholder="Your Email">
+
+  <!-- Bug 3: No required fields -->
+  <input type="text" placeholder="Subject">
+
+  <!-- Bug 4: Textarea has no name -->
+  <textarea placeholder="Your message"></textarea>
+
+  <!-- Bug 5: Button type not specified -->
+  <!-- defaults to submit but causes issues in 
+  some browsers -->
+  <button>Send Message</button>
+
+</form>
+
+<!-- Bug 6: No validation whatsoever -->
+<!-- Bug 7: No success/error feedback to user -->
+<!-- Bug 8: Form submits to empty action URL -->
+
+</body>
+</html>
