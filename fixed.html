@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" 
+  content="width=device-width, initial-scale=1.0">
+  <title>Fixed Contact Form</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; 
+    padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .form-container {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 24px;
+      color: #1a1a2e;
+      font-size: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: border-color 0.2s;
+      font-family: Arial, sans-serif;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #2c7be5;
+    }
+
+    input.error, textarea.error {
+      border-color: #e53e3e;
+    }
+
+    .error-msg {
+      color: #e53e3e;
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    textarea {
+      height: 130px;
+      resize: vertical;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      background: #2c7be5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button[type="submit"]:hover {
+      background: #1a5bbf;
+    }
+
+    .success-msg {
+      display: none;
+      background: #c6f6d5;
+      color: #276749;
+      padding: 16px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Contact Us</h2>
+
+  <!-- ✅ FIXED FORM -->
+  <form id="contactForm" 
+  action="your-backend-endpoint" 
+  method="POST" 
+  novalidate>
+
+    <div class="form-group">
+      <label for="name">Full Name *</label>
+      <input 
+        type="text" 
+        id="name" 
+        name="name"
+        placeholder="John Smith"
+        autocomplete="name">
+      <div class="error-msg" 
+      id="nameError">
+        Please enter your name
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address *</label>
+      <input 
+        type="email"
+        id="email" 
+        name="email"
+        placeholder="john@example.com"
+        autocomplete="email">
+      <div class="error-msg" 
+      id="emailError">
+        Please enter a valid email address
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="subject">Subject *</label>
+      <input 
+        type="text" 
+        id="subject" 
+        name="subject"
+        placeholder="How can we help?">
+      <div class="error-msg" 
+      id="subjectError">
+        Please enter a subject
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message *</label>
+      <textarea 
+        id="message" 
+        name="message"
+        placeholder="Tell us more...">
+      </textarea>
+      <div class="error-msg" 
+      id="messageError">
+        Please enter your message
+      </div>
+    </div>
+
+    <button type="submit">Send Message</button>
+
+    <div class="success-msg" id="successMsg">
+      ✅ Message sent! We'll get back to you soon.
+    </div>
+
+  </form>
+</div>
+
+<script>
+document.getElementById("contactForm")
+.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  var isValid = true;
+
+  // Clear previous errors
+  document.querySelectorAll(".error-msg")
+  .forEach(function(el) {
+    el.style.display = "none";
+  });
+  document.querySelectorAll("input, textarea")
+  .forEach(function(el) {
+    el.classList.remove("error");
+  });
+
+  // Validate name
+  var name = document.getElementById("name")
+  .value.trim();
+  if (name === "") {
+    document.getElementById("nameError")
+    .style.display = "block";
+    document.getElementById("name")
+    .classList.add("error");
+    isValid = false;
+  }
+
+  // Validate email
+  var email = document.getElementById("email")
+  .value.trim();
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    document.getElementById("emailError")
+    .style.display = "block";
+    document.getElementById("email")
+    .classList.add("error");
+    isValid = false;
+  }
+
+  // Validate subject
+  var subject = document.getElementById("subject")
+  .value.trim();
+  if (subject === "") {
+    document.getElementById("subjectError")
+    .style.display = "block";
+    document.getElementById("subject")
+    .classList.add("error");
+    isValid = false;
+  }
+
+  // Validate message
+  var message = document.getElementById("message")
+  .value.trim();
+  if (message === "") {
+    document.getElementById("messageError")
+    .style.display = "block";
+    document.getElementById("message")
+    .classList.add("error");
+    isValid = false;
+  }
+
+  // Submit if valid
+  if (isValid) {
+    document.getElementById("successMsg")
+    .style.display = "block";
+    document.getElementById("contactForm")
+    .reset();
+  }
+});
+</script>
+
+</body>
+</html>
